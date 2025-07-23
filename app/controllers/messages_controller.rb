@@ -2,7 +2,7 @@ class MessagesController < ApplicationController
   before_action :set_message, only: %i[ show edit update destroy ]
 
   def index
-    @messages = Message.all
+    @messages = Message.order(created_at: :desc)
   end
 
   def show
@@ -22,7 +22,8 @@ class MessagesController < ApplicationController
       if @message.save
         format.turbo_stream do
           render turbo_stream: [
-            turbo_stream.update("new_message", partial: "messages/form", locals: { message: Message.new })
+            turbo_stream.update("new_message", partial: "messages/form", locals: { message: Message.new }),
+            turbo_stream.prepend("messages", partial: "messages/message", locals: { message: @message })
           ]
         end
         format.html { redirect_to @message, notice: "Message was successfully created." }
@@ -55,6 +56,7 @@ class MessagesController < ApplicationController
     @message.destroy!
 
     respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@message) }
       format.html { redirect_to messages_path, status: :see_other, notice: "Message was successfully destroyed." }
       format.json { head :no_content }
     end
