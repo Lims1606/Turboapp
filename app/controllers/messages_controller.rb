@@ -13,6 +13,11 @@ class MessagesController < ApplicationController
   end
 
   def edit
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
+      end
+    end
   end
 
   def create
@@ -43,9 +48,15 @@ class MessagesController < ApplicationController
   def update
     respond_to do |format|
       if @message.update(message_params)
+        format.turbo_stream do
+        render turbo_stream: turbo_stream.update(@message, partial: "messages/mesaage", locals: { message: @message })
+      end
         format.html { redirect_to @message, notice: "Message was successfully updated." }
         format.json { render :show, status: :ok, location: @message }
       else
+        format.turbo_stream do
+        render turbo_stream: turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
+      end
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @message.errors, status: :unprocessable_entity }
       end
