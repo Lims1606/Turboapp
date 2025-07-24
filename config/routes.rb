@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  devise_for :views
+  devise_for :users
   resources :products
-  root "products#index"
+  root "messages#index"
   resources :messages do
     member do
       post :edit

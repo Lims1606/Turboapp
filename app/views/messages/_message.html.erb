@@ -3,6 +3,16 @@
     <strong>Body:</strong>
     <%= message.body %>
   </p>
+
+  <% if message.user %>
+    <p><em>Posted by: <%= message.user.email %></em></p>
+  <% end %>
+
+  <% if current_user == message.user %>
+    <%= button_to "Edit this message", edit_message_path(message), method: :post %>
+    <%= button_to "Destroy this message", message_path(message), method: :delete %>
+  <% end %>
+
   <p>
     <%= link_to "Show this message", message %>
 

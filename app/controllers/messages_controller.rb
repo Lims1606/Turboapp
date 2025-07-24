@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, except: [ :index, :show ]
 
   def index
     @messages = Message.order(created_at: :desc)
@@ -22,6 +23,7 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
+    @message = current_user.messages.build(message_param)
 
     respond_to do |format|
       if @message.save
@@ -69,6 +71,7 @@ class MessagesController < ApplicationController
   end
 
   def destroy
+    @message = current_user.messages.find(params[:id])
     @message.destroy!
 
     respond_to do |format|
