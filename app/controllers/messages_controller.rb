@@ -86,10 +86,10 @@ class MessagesController < ApplicationController
 
   private
     def set_message
-      @message = Message.find(params.expect(:id))
+      @message = Message.find(params[:id])
     end
 
     def message_params
-      params.expect(message: [ :body ])
+      params.require(:message).permit(:body)
     end
 end

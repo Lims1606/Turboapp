@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  root "messages#index"
+  resources :products
+  root "products#index"
   resources :messages do
     member do
       post :edit

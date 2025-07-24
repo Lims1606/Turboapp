@@ -1,0 +1,13 @@
+<% content_for :title, "New product" %>
+
+<h1>New product</h1>
+
+<%= turbo_frame_tag "new_product" do %>
+  <%= render "form", product: @product %>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Back to products", products_path %>
+</div>
