@@ -21,8 +21,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(message_params)
-    @message = current_user.messages.build(message_param)
+    @message = current_user.messages.build(message_params)
 
     respond_to do |format|
       if @message.save
@@ -70,7 +69,6 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    @message = current_user.messages.find(params[:id])
     @message.destroy!
 
     respond_to do |format|
