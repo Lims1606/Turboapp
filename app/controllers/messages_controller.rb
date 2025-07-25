@@ -6,8 +6,7 @@ class MessagesController < ApplicationController
     @messages = Message.order(created_at: :desc)
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @message = Message.new
@@ -57,13 +56,13 @@ class MessagesController < ApplicationController
           turbo_stream.update(@message, partial: "messages/message", locals: { message: @message }),
           turbo_stream.update("notice", "Message Updated Successfully!")
         ]
-      end
+        end
         format.html { redirect_to @message, notice: "Message was successfully updated." }
         format.json { render :show, status: :ok, location: @message }
       else
         format.turbo_stream do
         render turbo_stream: turbo_stream.update(@message, partial: "messages/form", locals: { message: @message })
-      end
+        end
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @message.errors, status: :unprocessable_entity }
       end
