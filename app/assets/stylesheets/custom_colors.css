@@ -1,0 +1,19 @@
+.error-red {
+  color: red;
+  font-weight: bold;
+}
+
+.text-green {
+  color: green;
+}
+
+.notice {
+  all: unset;
+  color: green;
+  font-weight: bold;
+}
+
+.alert {
+  color: darkred;
+  font-weight: bold;
+}

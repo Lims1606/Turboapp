@@ -1,0 +1,7 @@
+<% content_for :title, "Editing product" %>
+
+<h1>Editing product</h1>
+
+<%= turbo_frame_tag dom_id(@product) do %>
+  <%= render "form", product: @product %>
+<% end %>
